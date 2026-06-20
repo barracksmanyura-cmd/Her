@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message for Precious Jennifer</title>
+    <style>
+        body{ margin:0; font-family:Arial, sans-serif; background:linear-gradient(135deg,#ffd6e7,#fff5f8); display:flex; justify-content:center; align-items:center; min-height:100vh; } 
+        .card{
+         background:white;
+         width:90%;
+         max-width:650px;
+         padding:30px 20px;
+         border-radius:20px;
+         text-align:center;
+         box-shadow:0 10px 30px rgba(0,0,0,.1);
+         box-sizing: border-box;
+         position: relative;
+         overflow: hidden;
+         }
+        h1{
+         color:#ff4f87;
+         font-size: 24px;
+         margin-bottom: 15px;
+         }
+        p {
+         font-size: 16px;
+         line-height: 1.5;
+        }
+        .btn-container {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         gap: 10px;
+         margin-top: 20px;
+         position: relative;
+         width: 100%;
+        }
+        button{
+         border:none;
+         padding:15px 24px;
+         border-radius:12px;
+         cursor:pointer;
+         font-size:16px;
+         transition: transform 0.2s, background 0.3s;
+         width: 100%;
+         max-width: 280px;
+         box-sizing: border-box;
+         -webkit-tap-highlight-color: transparent;
+         }
+        .primary{
+         background:#ff4f87;
+         color:white;
+         font-weight: bold;
+         }
+        .secondary{
+         background:#ececec;
+         color: #333;
+         }
+        /* Style for the playful trick button */
+        #unsureBtn {
+         position: relative;
+         transition: all 0.2s ease;
+        }
+        table{
+         width:100%;
+         margin-top:20px;
+         border-collapse:collapse;
+         }
+        td{
+         padding:12px 10px;
+         border-bottom:1px solid #eee;
+         font-size: 15px;
+         }
+        .hidden{
+         display:none;
+         }
+        
+        .scheduler-box {
+            margin-top: 25px;
+            padding: 20px 15px;
+            background: #fff0f5;
+            border-radius: 15px;
+            border: 1px dashed #ff4f87;
+        }
+        .scheduler-box h3 {
+            color: #ff4f87;
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .picker-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .picker-field {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            color: #555;
+            width: 100%;
+        }
+        .picker-field label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .picker-field input {
+            padding: 12px;
+            border: 2px solid #ff4f87;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            max-width: 240px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        #confirmationMessage {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #d12e5f;
+            font-size: 15px;
+        }
+        .persuasion-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            text-align: left;
+            border-left: 4px solid #ff4f87;
+            box-shadow: 0 2px 10px rgba(0,0,0,.04);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <!-- PAGE 1 -->
+        <div id="page1">
+            <h1>💌 A Message for Precious Jennifer</h1>
+            <p>Hello, Precious Jennifer.</p>
+            <p>You have been selected to participate in a highly important experiment.</p>
+            <p>The purpose of this experiment is to determine whether conversations are better through a screen or in real life.</p>
+            <p>Your participation would be greatly appreciated.</p>
+            <div class="btn-container">
+                <button class="primary" onclick="next(2)">Continue ➡️</button>
+            </div>
+        </div>
+
+        <!-- PAGE 2 -->
+        <div id="page2" class="hidden">
+            <h1>🕵️ Mission Briefing</h1>
+            <p><strong>Objective:</strong></p>
+            <ul style="text-align: left; display: inline-block; padding-left: 20px;">
+                <li>Have a pleasant afternoon</li>
+                <li>Exchange interesting stories</li>
+                <li>Confirm whether real-life conversations are superior</li>
+            </ul>
+            <p><strong>Reward:</strong></p>
+            <ul style="text-align: left; display: inline-block; padding-left: 20px;">
+                <li>Good company</li>
+                <li>Good stories</li>
+                <li>Potentially ice cream 🍦</li>
+            </ul>
+            <p><strong>Risk Level:</strong> Minimal 😌</p>
+            <div class="btn-container">
+                <button class="primary" onclick="startLoading()">Accept Mission ✅</button>
+            </div>
+        </div>
+
+        <!-- PAGE 3 -->
+        <div id="page3" class="hidden">
+            <h1 id="loadingText">📊 Compatibility Analysis</h1>
+            <p>Analyzing candidate... 0%</p>
+        </div>
+
+        <!-- PAGE 4 -->
+        <div id="page4" class="hidden">
+            <h1>🤔 Final Question</h1>
+            <p>Would you be interested in joining me for a friendly hangout whenever you happen to be free?</p>
+            <div class="btn-container">
+                <button class="primary" onclick="showResult('yes')">💖 Yes, I'd like that</button>
+                <button class="secondary" onclick="showResult('timing')">🤝 Let's discuss timing</button>
+                <!-- Playful button that triggers a running/transformation trick on mobile touch -->
+                <button class="secondary" id="unsureBtn" ontouchstart="playfulTrick()" onmouseover="playfulTrick()" onclick="showResult('unsure')">🙈 I'm not sure yet</button>
+            </div>
+        </div>
+
+        <!-- PAGE 5 -->
+        <div id="result" class="hidden"></div>
+    </div>
+
+    <script>
+        let trickCount = 0;
+
+        function next(page){
+            for(let i=1;i<=4;i++){
+                let el=document.getElementById("page"+i);
+                if(el) el.classList.add("hidden");
+            }
+            document.getElementById("page"+page).classList.remove("hidden");
+        }
+
+        function startLoading(){
+            next(3);
+            const text=document.getElementById("loadingText");
+            const values=[12,37,64,89,100];
+            let i=0;
+            const timer=setInterval(()=>{
+                text.innerHTML="Analyzing candidate... "+values[i]+"%";
+                i++;
+                if(i===values.length){
+                    clearInterval(timer);
+                    setTimeout(()=>{
+                        document.getElementById("page3").innerHTML=`
+                            <h1>📊 Results</h1> 
+                            <table> 
+                                <tr><td>Storytelling</td><td>98%</td></tr> 
+                                <tr><td>Sense of Humor</td><td>95%</td></tr> 
+                                <tr><td>Pleasant Company</td><td>100%</td></tr> 
+                                <tr><td>Hangout Potential</td><td>99.9%</td></tr> 
+                            </table> 
+                            <p style="margin-top:20px;"> Conclusion:<br><br> Precious Jennifer is highly qualified for one (1) friendly outing. </p> 
+                            <div class="btn-container">
+                                <button class="primary" onclick="next(4)"> Continue </button>
+                            </div>
+                        `;
+                    },1000);
+                }
+            },700);
+        }
+
+        // Trending video trick: Makes the button hard to tap, then forces it to become a "Yes"
+        function playfulTrick() {
+            const btn = document.getElementById("unsureBtn");
+            trickCount++;
+            
+            if (trickCount === 1) {
+                btn.style.transform = "translateX(-50px) scale(0.9)";
+            } else if (trickCount === 2) {
+                btn.style.transform = "translateX(60px) translateY(-10px) scale(0.8)";
+            } else {
+                // The ultimate transformation
+                btn.innerHTML = "💖 Just kidding, YES! 😂";
+                btn.className = "primary";
+                btn.style.transform = "none";
+                btn.onclick = function() { showResult('yes'); };
+            }
+        }
+
+        function showResult(type){
+            document.getElementById("page4").classList.add("hidden");
+            const result=document.getElementById("result");
+            result.classList.remove("hidden");
+            
+            let messageHtml = "";
+
+            if(type==="yes"){
+                messageHtml=`
+                    <h1>🎉 Excellent Choice</h1> 
+                    <p> Your application has been approved. </p> 
+                    <p> Further details will be communicated through the usual channels. </p> 
+                    <p> Looking forward to hearing your stories 😌 </p> 
+                `;
+            }
+            if(type==="timing"){
+                messageHtml=`
+                    <h1>😄 Fair Enough</h1> 
+                    <p> Scheduling is important. </p> 
+                    <p> We shall negotiate a suitable date like civilized people. </p> 
+                `;
+            }
+            if(type==="unsure"){
+                messageHtml=`
+                    <h1>😜 Nice Try!</h1> 
+                    
